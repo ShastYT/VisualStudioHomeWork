@@ -4,11 +4,11 @@
 * и последующей пересдачей одного из предметов
 */
 #include <iostream>
-#include "Helpers.h"
+#include <string>
 
 int main()
 {
-    int a = 10;
-    int b = 20;
-    std::cout << "Square of sum " << a << " and " << b <<  " equal " << SqrtSum(a, b);
+    std::string Alpha ="SkillBox";
+    int len = Alpha.length();
+    std::cout << Alpha << "\n" << Alpha.length() << "\n" << Alpha[0] << "\n" << Alpha[len - 1];
 }
