@@ -4,31 +4,40 @@
 * и последующей пересдачей одного из предметов
 */
 #include <iostream>
+#include <time.h>
 
-void GetNubers(int start, int N) {
-    for (int i = start; i < N; i += 2) {
-        std::cout << i << "\n";
-    }
-}
-void isNumbersOdd(int N, bool isOdd) {
-    if (isOdd) {
-        GetNubers(1, N);
-    }
-    else {
-        GetNubers(0, N);
-    }
-}
+
 int main()
 {
-    int N = 115; //change N
-    bool isOdd = true; //change Odd or Not
+	// Получения текущего дня(?)
+	struct tm buf;
+	time_t t = time(NULL);
+	localtime_s(&buf, &t);
+	int day = buf.tm_mday;
 
-    GetNubers(0, N);
+	const int N = 5; // Можно менять для изменения размера матрицы
+	int array[N][N];
+	int sum = 0;
 
-    std::cout << "\n";
+	// Вывод матрицы
+	for (int i = 0; i < N; i++) {
 
-    isNumbersOdd(N, isOdd);
+		for (int j = 0; j < N; j++) {
 
-    std::cout << "Cycles used: 1, if/else used: 1";
+			array[i][j] = i + j;
+			std::cout << (i + j) << " ";
+
+		}
+
+		std::cout << "\n";
+	}
+
+	std::cout << "\n";
+	// Вывод Строки и суммы элементов (где простой sum(array)?((( )
+	for (int j = 0; j < N; j++) {
+		std::cout << array[day % N][j] << " ";
+		sum+= array[day % N][j];
+	}
+	std::cout << "\n" << sum;
 }
 
