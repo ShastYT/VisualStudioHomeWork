@@ -1,91 +1,73 @@
-﻿/*
-* Я не смог понять как приспособить Character 
-* для продвинутых типов соритровки (bubble, quick)
-* поэтому сделал простой цикл (массив вряд ли будет большой)
-* с проверкой, отсортирован ли массив
-*/
-#include <iostream>
+﻿#include <iostream>
 #include <string>
 #include <algorithm>
 using namespace std;
 
-class Character {
+class Animals {
 private:
 
-	string Name = "Defalut";
-	int Score = 0;
+	string phrase;
 
 public:
 
-	void SetCharacter(string NewName, int NewScore) {
-		Name = NewName;
-		Score = NewScore;
-	}
-
-	string GetName() {
-		return Name;
-	}
-
-	int GetScore() {
-		return Score;
+	virtual void Voice()
+	{
+		cout << phrase;
 	}
 };
 
-bool isSorted(Character** arr, int n) //Проверка, отсортирован ли массив
+class Dog : public Animals
 {
-	for (int i = 0; i < n - 1; i++)
-	{
-		if (arr[i]->GetScore() > arr[i + 1]->GetScore()) {
-			return false;
-		}
+private:
+
+	string CurPhrase = "Woof\n";
+
+public:
+
+	virtual void Voice() override {
+		cout << CurPhrase;
+	}
+};
+
+class Cat : public Animals
+{
+private:
+
+	string CurPhrase = "Meow\n";
+
+public:
+
+	virtual void Voice() override {
+		cout << CurPhrase;
 	}
 
-	return true;
-}
+};
 
+class Cow : public Animals
+{
+private:
+
+	string CurPhrase = "Moo\n";
+
+public:
+
+	virtual void Voice() override {
+		cout << CurPhrase;
+	}
+
+};
 
 int main()
 {
-	cout << "Amount of players: ";
-	int PlayersAmount;
-	cin >> PlayersAmount;
+	Animals** Zoo = new Animals * [3];
+	Zoo[0] = new Dog;
+	Zoo[1] = new Cat;
+	Zoo[2] = new Cow;
 
-	Character** players = new Character * [PlayersAmount];
-
-
-	// Добавление игроков
-	for (int i = 0; i < PlayersAmount; ++i) {
-		cout << "\n Player number " << i+1 << "\n";
-		players[i] = new Character();
-		string CurrentPlayerName;
-		int CurrentPlayerScore;
-
-		cout << "\n Name: ";
-		cin >> CurrentPlayerName;
-
-		cout << "\n Score: ";
-		cin >> CurrentPlayerScore;
-
-		players[i]->SetCharacter(CurrentPlayerName, CurrentPlayerScore);
+	for (int i = 0; i < 3; i++)
+	{
+		Zoo[i]->Voice();
 	}
 
-	//Сортировка типа a = b, b = a пока массив не отсортируется
-	while (isSorted(players,PlayersAmount) == false) {
-		for (int j = 0; j < PlayersAmount - 1; j++) {
-			if (players[j]->GetScore() > players[j + 1]->GetScore()) {
-
-				Character* temp = players[j];
-				players[j] = players[j + 1];
-				players[j + 1] = temp;
-
-			}
-		}
-	}
-	
-	// Вывод игроков в порядке возрастания счета
-	for (int i = 0; i < PlayersAmount; i++) {
-		cout << "\n" << players[i]->GetName() << " " << players[i]->GetScore() << "\n";
-	}
-
+	delete[] Zoo;
 }
-
